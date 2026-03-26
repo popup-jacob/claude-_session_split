@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "node session-fork/scripts/session-context.js",
+        "timeout": 5000
+      }
+    ]
+  }
+}
