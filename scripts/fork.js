@@ -87,7 +87,7 @@ function createForkSession() {
   }
 
   const filePath = path.resolve(contextFile).replace(/\\/g, '/');
-  const launchCmd = `claude "${filePath} 읽고 이 컨텍스트 기반으로 이어서 대화해줘"`;
+  const launchCmd = `claude "Read ${filePath} and continue the conversation based on that context."`;
 
   if (autoLaunch) {
     try {
@@ -109,7 +109,7 @@ function createForkSession() {
 function copyToClipboard(text) {
   try {
     if (process.platform === 'win32') {
-      execSync('clip', { input: text, stdio: ['pipe', 'ignore', 'ignore'] });
+      execSync('powershell -command "Set-Clipboard -Value $input"', { input: text, stdio: ['pipe', 'ignore', 'ignore'] });
     } else if (process.platform === 'darwin') {
       execSync('pbcopy', { input: text, stdio: ['pipe', 'ignore', 'ignore'] });
     } else {

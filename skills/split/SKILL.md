@@ -64,26 +64,27 @@ Create a complete summary of everything related to the topic. Include all releva
 
 ### Step 5: Save and Execute
 
-1. Write the generated context to `~/.claude/projects/<project-key>/_fork-context.txt`
-   (same directory where session .jsonl files are stored)
+1. Generate a unique filename with English topic slug and timestamp:
+   `~/.claude/projects/<project-key>/_fork-<english-slug>-<timestamp>.txt`
+   - english-slug: brief English summary of the topic (2-3 words, lowercase, hyphens)
+   - timestamp: Unix timestamp (e.g. 1711432800)
+   - Example: `_fork-robinhood-address-1711432800.txt`, `_fork-voter-registration-1711432850.txt`
+   - IMPORTANT: Do NOT use non-ASCII characters (Korean, Japanese, etc.) in the filename. They break on Windows clipboard.
 
 2. Run fork.js create with the appropriate flag based on user's command:
 
 ```bash
 # Default (/split "topic"): copy launch command to clipboard
-node session-fork/scripts/fork.js create <project-dir>/_fork-context.txt
+node session-fork/scripts/fork.js create <project-dir>/_fork-<topic-slug>-<timestamp>.txt
 
 # -a (/split -a "topic"): auto-launch new terminal
-node session-fork/scripts/fork.js create <project-dir>/_fork-context.txt -a
+node session-fork/scripts/fork.js create <project-dir>/_fork-<topic-slug>-<timestamp>.txt -a
 
 # -c (/split -c "topic"): copy context content to clipboard
-node session-fork/scripts/fork.js create <project-dir>/_fork-context.txt -c
+node session-fork/scripts/fork.js create <project-dir>/_fork-<topic-slug>-<timestamp>.txt -c
 ```
 
-3. The launch command copied to clipboard uses the file path approach:
-```
-claude "<project-dir>/_fork-context.txt 읽고 이 컨텍스트 기반으로 이어서 대화해줘"
-```
+3. IMPORTANT: Always use `fork.js create` for clipboard operations. Do NOT copy to clipboard manually via Bash — it will break Unicode/Korean text on Windows. fork.js handles encoding correctly.
 
 ## Important Rules
 
